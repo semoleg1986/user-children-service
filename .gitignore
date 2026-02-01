@@ -17,3 +17,8 @@ build/
 .DS_Store
 .env
 .copy.env
+
+# Files
+git-auto-commit.sh
+git-auto-init.sh
+setup-config.sh
