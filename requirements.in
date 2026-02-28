@@ -1,6 +1,11 @@
 pytest
 pytest-asyncio
 pytest-cov
+fastapi
+uvicorn[standard]
+dishka
+pyjwt[crypto]
+httpx
 
 black
 isort

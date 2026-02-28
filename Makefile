@@ -15,6 +15,9 @@ install: requirements ## Установить зависимости
 test: ## Запустить все тесты с подробным выводом
 	pytest -v
 
+test-cov: ## Запустить все тесты с покрытием
+	pytest --cov=src
+
 # ========================
 # Code Quality
 # ========================
@@ -28,6 +31,13 @@ lint: ## Проверка стиля и типов (flake8 + mypy)
 	mypy .
 
 check: format lint test ## Полная проверка качества кода
+
+# ========================
+# Run
+# ========================
+
+run: ## Запустить HTTP сервис (uvicorn)
+	uvicorn src.interface.http.main:app --host 0.0.0.0 --port 8001 --env-file .env
 
 # ========================
 # Pre-commit

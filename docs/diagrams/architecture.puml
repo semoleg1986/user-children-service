@@ -1,0 +1,27 @@
+@startuml Architecture
+package "Interface Layer" {
+    [API Handlers]
+    [DTOs]
+}
+package "Application Layer" {
+    [Use Cases]
+    [Commands / Queries]
+    [UnitOfWork]
+}
+package "Domain Layer" {
+    [Entities / Aggregates]
+    [Policies]
+    [Repositories Interfaces]
+}
+package "Infrastructure Layer" {
+    [SQLAlchemy Models]
+    [Repository Implementations]
+}
+
+[API Handlers] --> [Use Cases]
+[Use Cases] --> [Entities / Aggregates]
+[Use Cases] --> [Policies]
+[Use Cases] --> [UnitOfWork]
+[Repository Implementations] --> [Repositories Interfaces]
+[Use Cases] --> [Repository Implementations]
+@enduml

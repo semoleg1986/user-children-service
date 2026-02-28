@@ -1,0 +1,25 @@
+@startuml ContextDiagram
+!theme plain
+skinparam shadowing false
+
+actor Admin
+actor User
+actor AuthService
+
+rectangle "Child Management Service" {
+    rectangle "Child Management Context" {
+        Admin --> (Manage Users)
+        Admin --> (View/Manage Children)
+        User --> (Create Own User)
+        User --> (Manage Own Children)
+    }
+}
+
+rectangle "Infrastructure" {
+    (DB / Repository)
+}
+
+(User, Admin) --> "Child Management Service"
+"Child Management Service" --> AuthService : JWT/JWKS
+"Child Management Service" --> (DB / Repository)
+@enduml

@@ -1,0 +1,39 @@
+@startuml DomainModel
+!theme plain
+skinparam shadowing false
+
+class User {
+    +user_id: UUID
+    +name: str
+    +add_child(child_data)
+    +remove_child(child_id)
+    +update_child(child_id)
+    +get_children()
+}
+
+class Child {
+    +child_id: UUID
+    +name: str
+    +birthdate: date
+    +add_story(story_data)
+}
+
+class Story {
+    +story_id: UUID
+    +title: str
+    +content: str
+}
+
+class AccessPolicy {
+    +can_manage_user(actor, user_id)
+    +can_add_child(actor, user)
+    +can_update_child(actor, user)
+    +can_remove_child(actor, user)
+    +can_view_children(actor, user)
+    +can_add_story(actor, user)
+}
+
+User "1" -- "0..*" Child : owns
+Child "1" -- "0..*" Story : contains
+AccessPolicy ..> User
+@enduml
