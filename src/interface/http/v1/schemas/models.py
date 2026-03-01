@@ -64,3 +64,21 @@ class ProblemDetails(BaseModel):
     detail: str
     instance: str | None = None
     request_id: str | None = None
+
+
+class AuditEventResponse(BaseModel):
+    event_id: UUID
+    service: str
+    action: str
+    occurred_at: datetime
+    actor_id: UUID
+    actor_role: str
+    target_type: str
+    target_id: UUID
+    request_id: str | None
+    correlation_id: str | None
+    payload_before: dict[str, object]
+    payload_after: dict[str, object]
+    user_id: UUID | None
+    version_after: int | None
+    status_after: str | None

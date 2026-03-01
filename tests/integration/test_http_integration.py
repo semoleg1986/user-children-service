@@ -139,3 +139,110 @@ def test_full_flow(client: TestClient, jwks) -> None:
     )
     assert list_children.status_code == 200
     assert len(list_children.json()) == 1
+
+
+def test_admin_can_read_audit_events(client: TestClient, jwks) -> None:
+    user_id = str(uuid4())
+    admin_id = str(uuid4())
+    kid = jwks["keys"][0]["kid"]
+    user_token = _issue_access_token(user_id=user_id, roles=["user"], kid=kid)
+    admin_token = _issue_access_token(user_id=admin_id, roles=["admin"], kid=kid)
+
+    create_user = client.post(
+        "/v1/user/users",
+        json={"name": "Oleg"},
+        headers={"Authorization": f"Bearer {user_token}"},
+    )
+    assert create_user.status_code == 201
+
+    response = client.get(
+        "/v1/admin/audit/events",
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert len(payload) >= 1
+    assert payload[0]["service"] == "user-children-service"
+    assert payload[0]["actor_id"] == user_id
+
+
+def test_non_admin_cannot_read_audit_events(client: TestClient, jwks) -> None:
+    user_id = str(uuid4())
+    kid = jwks["keys"][0]["kid"]
+    token = _issue_access_token(user_id=user_id, roles=["user"], kid=kid)
+
+    response = client.get(
+        "/v1/admin/audit/events",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert response.status_code == 403
+
+
+def test_admin_can_filter_audit_events(client: TestClient, jwks) -> None:
+    user_id = str(uuid4())
+    admin_id = str(uuid4())
+    kid = jwks["keys"][0]["kid"]
+    user_token = _issue_access_token(user_id=user_id, roles=["user"], kid=kid)
+    admin_token = _issue_access_token(user_id=admin_id, roles=["admin"], kid=kid)
+
+    client.post(
+        "/v1/user/users",
+        json={"name": "Oleg"},
+        headers={"Authorization": f"Bearer {user_token}"},
+    )
+    client.post(
+        f"/v1/user/users/{user_id}/children",
+        json={"name": "Kid", "birthdate": "2020-05-15"},
+        headers={"Authorization": f"Bearer {user_token}"},
+    )
+
+    by_action = client.get(
+        "/v1/admin/audit/events",
+        params={"action": "child.created"},
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert by_action.status_code == 200
+    action_events = by_action.json()
+    assert len(action_events) >= 1
+    assert all(event["action"] == "child.created" for event in action_events)
+
+    by_actor = client.get(
+        "/v1/admin/audit/events",
+        params={"actor_id": user_id},
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert by_actor.status_code == 200
+    actor_events = by_actor.json()
+    assert len(actor_events) >= 2
+    assert all(event["actor_id"] == user_id for event in actor_events)
+
+    by_time = client.get(
+        "/v1/admin/audit/events",
+        params={"from": "2099-01-01T00:00:00+00:00"},
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert by_time.status_code == 200
+    assert by_time.json() == []
+
+    by_to = client.get(
+        "/v1/admin/audit/events",
+        params={"to": "2099-01-01T00:00:00+00:00"},
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert by_to.status_code == 200
+    assert len(by_to.json()) >= 2
+
+
+def test_admin_audit_events_invalid_datetime_returns_422(
+    client: TestClient, jwks
+) -> None:
+    admin_id = str(uuid4())
+    kid = jwks["keys"][0]["kid"]
+    admin_token = _issue_access_token(user_id=admin_id, roles=["admin"], kid=kid)
+
+    response = client.get(
+        "/v1/admin/audit/events",
+        params={"from": "not-a-datetime"},
+        headers={"Authorization": f"Bearer {admin_token}"},
+    )
+    assert response.status_code == 422

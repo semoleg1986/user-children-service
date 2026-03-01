@@ -1,4 +1,5 @@
 from .models import (
+    AuditEventResponse,
     ChildCreateRequest,
     ChildResponse,
     ChildUpdateRequest,
@@ -11,6 +12,7 @@ from .models import (
 )
 
 __all__ = [
+    "AuditEventResponse",
     "ChildCreateRequest",
     "ChildResponse",
     "ChildUpdateRequest",

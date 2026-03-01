@@ -8,6 +8,7 @@ from src.application.auth import AuthService
 from src.domain.policies.access_policy import Actor
 from src.infrastructure.clients.auth.jwks_cache import JWKSCache
 from src.infrastructure.clients.auth.jwt_verifier import (
+    extract_optional_claim,
     is_admin_from_claims,
     verify_token_and_get_claims,
 )
@@ -34,4 +35,5 @@ class JwtAuthService(AuthService):
             raise InvalidTokenError("Invalid token subject") from exc
 
         is_admin = is_admin_from_claims(claims, settings=self._settings)
-        return Actor(user_id=user_id, is_admin=is_admin)
+        org_id = extract_optional_claim(claims, claim_path=self._settings.org_claim)
+        return Actor(user_id=user_id, is_admin=is_admin, org_id=org_id)

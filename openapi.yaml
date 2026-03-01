@@ -1,0 +1,1985 @@
+{
+  "components": {
+    "schemas": {
+      "AuditEventResponse": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "actor_id": {
+            "format": "uuid",
+            "title": "Actor Id",
+            "type": "string"
+          },
+          "actor_role": {
+            "title": "Actor Role",
+            "type": "string"
+          },
+          "correlation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correlation Id"
+          },
+          "event_id": {
+            "format": "uuid",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "payload_after": {
+            "additionalProperties": true,
+            "title": "Payload After",
+            "type": "object"
+          },
+          "payload_before": {
+            "additionalProperties": true,
+            "title": "Payload Before",
+            "type": "object"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "status_after": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status After"
+          },
+          "target_id": {
+            "format": "uuid",
+            "title": "Target Id",
+            "type": "string"
+          },
+          "target_type": {
+            "title": "Target Type",
+            "type": "string"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          },
+          "version_after": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version After"
+          }
+        },
+        "required": [
+          "event_id",
+          "service",
+          "action",
+          "occurred_at",
+          "actor_id",
+          "actor_role",
+          "target_type",
+          "target_id",
+          "request_id",
+          "correlation_id",
+          "payload_before",
+          "payload_after",
+          "user_id",
+          "version_after",
+          "status_after"
+        ],
+        "title": "AuditEventResponse",
+        "type": "object"
+      },
+      "ChildCreateRequest": {
+        "properties": {
+          "birthdate": {
+            "format": "date",
+            "title": "Birthdate",
+            "type": "string"
+          },
+          "child_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Child Id"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "birthdate"
+        ],
+        "title": "ChildCreateRequest",
+        "type": "object"
+      },
+      "ChildResponse": {
+        "properties": {
+          "birthdate": {
+            "format": "date",
+            "title": "Birthdate",
+            "type": "string"
+          },
+          "child_id": {
+            "format": "uuid",
+            "title": "Child Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "child_id",
+          "name",
+          "birthdate",
+          "status",
+          "created_at",
+          "updated_at",
+          "version"
+        ],
+        "title": "ChildResponse",
+        "type": "object"
+      },
+      "ChildUpdateRequest": {
+        "properties": {
+          "birthdate": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birthdate"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "title": "ChildUpdateRequest",
+        "type": "object"
+      },
+      "CreateUserRequest": {
+        "properties": {
+          "name": {
+            "default": "",
+            "title": "Name",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "title": "CreateUserRequest",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "ProblemDetails": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "instance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Instance"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          },
+          "status": {
+            "title": "Status",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "title": "ProblemDetails",
+        "type": "object"
+      },
+      "SelfCreateUserRequest": {
+        "properties": {
+          "name": {
+            "default": "",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "title": "SelfCreateUserRequest",
+        "type": "object"
+      },
+      "StoryCreateRequest": {
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "story_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Story Id"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "content"
+        ],
+        "title": "StoryCreateRequest",
+        "type": "object"
+      },
+      "StoryResponse": {
+        "properties": {
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "story_id": {
+            "format": "uuid",
+            "title": "Story Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "story_id",
+          "title",
+          "content"
+        ],
+        "title": "StoryResponse",
+        "type": "object"
+      },
+      "UserResponse": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "user_id",
+          "name",
+          "status",
+          "created_at",
+          "updated_at",
+          "version"
+        ],
+        "title": "UserResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Child Management Service",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "healthz_healthz_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Healthz Healthz Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Healthz",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "readyz_readyz_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Readyz Readyz Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readyz",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/v1/admin/audit/events": {
+      "get": {
+        "operationId": "admin_view_audit_events_v1_admin_audit_events_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "actor_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Actor Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Action"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AuditEventResponse"
+                  },
+                  "title": "Response Admin View Audit Events V1 Admin Audit Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/admin/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User already exists",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Admin View Audit Events",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/v1/admin/users": {
+      "get": {
+        "operationId": "admin_view_users_v1_admin_users_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UserResponse"
+                  },
+                  "title": "Response Admin View Users V1 Admin Users Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/admin/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User already exists",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Admin View Users",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "create_user_v1_admin_users_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/admin/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User already exists",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create User",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/v1/admin/users/{user_id}/children": {
+      "get": {
+        "operationId": "admin_view_children_v1_admin_users__user_id__children_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ChildResponse"
+                  },
+                  "title": "Response Admin View Children V1 Admin Users  User Id  Children Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/admin/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User already exists",
+                  "instance": "/v1/admin/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Admin View Children",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/v1/user/users": {
+      "post": {
+        "operationId": "self_create_user_v1_user_users_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SelfCreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Self Create User",
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/users/{user_id}/children": {
+      "get": {
+        "operationId": "view_children_v1_user_users__user_id__children_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ChildResponse"
+                  },
+                  "title": "Response View Children V1 User Users  User Id  Children Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "View Children",
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "operationId": "add_child_v1_user_users__user_id__children_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChildCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChildResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Add Child",
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/users/{user_id}/children/{child_id}": {
+      "delete": {
+        "operationId": "remove_child_v1_user_users__user_id__children__child_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "child_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Child Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Remove Child",
+        "tags": [
+          "user"
+        ]
+      },
+      "patch": {
+        "operationId": "update_child_v1_user_users__user_id__children__child_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "child_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Child Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChildUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Child",
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/users/{user_id}/children/{child_id}/restore": {
+      "post": {
+        "operationId": "restore_child_v1_user_users__user_id__children__child_id__restore_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "child_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Child Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Restore Child",
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/users/{user_id}/children/{child_id}/stories": {
+      "post": {
+        "operationId": "add_story_v1_user_users__user_id__children__child_id__stories_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "User Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "child_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Child Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoryCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Authorization Bearer token is required",
+                  "instance": "/v1/user/users",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 401,
+                  "title": "Unauthorized",
+                  "type": "https://example.com/problems/unauthorized"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Access denied",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 403,
+                  "title": "Access Denied",
+                  "type": "https://example.com/problems/access-denied"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "User not found",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 404,
+                  "title": "Not Found",
+                  "type": "https://example.com/problems/not-found"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "example": {
+                  "detail": "Child with this id already exists",
+                  "instance": "/v1/user/users/123e4567-e89b-12d3-a456-426614174000/children",
+                  "request_id": "4b1c5f8c-7f2b-4e7f-8f7a-6b76a0e3f6a1",
+                  "status": 409,
+                  "title": "Conflict",
+                  "type": "https://example.com/problems/conflict"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Add Story",
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  }
+}

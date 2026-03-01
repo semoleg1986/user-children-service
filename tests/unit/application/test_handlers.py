@@ -250,6 +250,68 @@ def test_add_story_child_not_found(uow: InMemoryUoW, user_actor: Actor) -> None:
         )
 
 
+def test_add_story_access_denied(uow: InMemoryUoW, user_actor: Actor) -> None:
+    owner = User(user_id=uuid4(), name="Other")
+    child = owner.add_child(ChildData(name="Kid", birthdate=date(2020, 5, 15)))
+    asyncio.run(uow.user_repo.save(owner))
+
+    with pytest.raises(AccessDeniedError):
+        asyncio.run(
+            handle_add_story(
+                AddStoryCommand(
+                    user_id=owner.user_id,
+                    child_id=child.child_id,
+                    story_data=StoryData(title="S", content="C"),
+                ),
+                uow=uow,
+                actor=user_actor,
+            )
+        )
+
+
+def test_add_story_success(uow: InMemoryUoW, user_actor: Actor) -> None:
+    owner = User(user_id=user_actor.user_id, name="Owner")
+    child = owner.add_child(ChildData(name="Kid", birthdate=date(2020, 5, 15)))
+    asyncio.run(uow.user_repo.save(owner))
+
+    story = asyncio.run(
+        handle_add_story(
+            AddStoryCommand(
+                user_id=owner.user_id,
+                child_id=child.child_id,
+                story_data=StoryData(title="S", content="C"),
+            ),
+            uow=uow,
+            actor=user_actor,
+        )
+    )
+    assert story.title == "S"
+    assert uow.committed is True
+    assert any(e.action == "story.added" for e in uow.audit_events)
+
+
+def test_add_story_invariant_violation_for_archived_child(
+    uow: InMemoryUoW, user_actor: Actor
+) -> None:
+    owner = User(user_id=user_actor.user_id, name="Owner")
+    child = owner.add_child(ChildData(name="Kid", birthdate=date(2020, 5, 15)))
+    child.archive()
+    asyncio.run(uow.user_repo.save(owner))
+
+    with pytest.raises(InvariantViolationError):
+        asyncio.run(
+            handle_add_story(
+                AddStoryCommand(
+                    user_id=owner.user_id,
+                    child_id=child.child_id,
+                    story_data=StoryData(title="S", content="C"),
+                ),
+                uow=uow,
+                actor=user_actor,
+            )
+        )
+
+
 def test_view_children_success(uow: InMemoryUoW, user_actor: Actor) -> None:
     owner = User(user_id=user_actor.user_id, name="Owner")
     active = owner.add_child(ChildData(name="Kid", birthdate=date(2020, 5, 15)))

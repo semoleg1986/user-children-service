@@ -13,6 +13,7 @@ class AuthSettings:
     role_claim_path: str
     admin_role: str
     subject_claim: str
+    org_claim: str
     jwks_cache_ttl_seconds: int
     clock_skew_seconds: int
 
@@ -25,6 +26,7 @@ def load_auth_settings() -> AuthSettings:
     role_claim_path = os.getenv("AUTH_ROLE_CLAIM", "roles").strip()
     admin_role = os.getenv("AUTH_ADMIN_ROLE", "admin").strip()
     subject_claim = os.getenv("AUTH_SUBJECT_CLAIM", "sub").strip()
+    org_claim = os.getenv("AUTH_ORG_CLAIM", "org_id").strip()
     jwks_cache_ttl_seconds = int(os.getenv("AUTH_JWKS_CACHE_TTL", "300"))
     clock_skew_seconds = int(os.getenv("AUTH_CLOCK_SKEW", "30"))
     if jwks_cache_ttl_seconds < 0:
@@ -49,6 +51,7 @@ def load_auth_settings() -> AuthSettings:
         role_claim_path=role_claim_path,
         admin_role=admin_role,
         subject_claim=subject_claim,
+        org_claim=org_claim,
         jwks_cache_ttl_seconds=jwks_cache_ttl_seconds,
         clock_skew_seconds=clock_skew_seconds,
     )

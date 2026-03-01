@@ -40,6 +40,18 @@ run: ## Запустить HTTP сервис (uvicorn)
 	uvicorn src.interface.http.main:app --host 0.0.0.0 --port 8001 --env-file .env
 
 # ========================
+# API Contract
+# ========================
+
+openapi-export: ## Сгенерировать versioned OpenAPI artifact (openapi.yaml)
+	python scripts/export_openapi.py --output openapi.yaml
+
+openapi-check: ## Проверить, что openapi.yaml синхронизирован с кодом
+	python scripts/export_openapi.py --output openapi.yaml --check
+
+contract-provider: openapi-check test ## Проверка provider-контракта (OpenAPI + tests)
+
+# ========================
 # Pre-commit
 # ========================
 

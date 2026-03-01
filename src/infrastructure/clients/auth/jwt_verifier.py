@@ -9,13 +9,18 @@ from src.infrastructure.clients.auth.jwks_cache import JWKSCache
 from src.infrastructure.clients.auth.settings import AuthSettings
 
 
-def _extract_roles(claims: dict[str, Any], path: str) -> list[str]:
+def _extract_claim_by_path(claims: dict[str, Any], path: str) -> Any:
     parts = [p for p in path.split(".") if p]
     current: Any = claims
     for part in parts:
         if not isinstance(current, dict) or part not in current:
-            return []
+            return None
         current = current[part]
+    return current
+
+
+def _extract_roles(claims: dict[str, Any], path: str) -> list[str]:
+    current = _extract_claim_by_path(claims, path)
 
     if isinstance(current, list):
         return [str(r) for r in current]
@@ -26,6 +31,16 @@ def _extract_roles(claims: dict[str, Any], path: str) -> list[str]:
             return [r for r in current.split(",") if r]
         return [current]
     return []
+
+
+def extract_optional_claim(claims: dict[str, Any], *, claim_path: str) -> str | None:
+    value = _extract_claim_by_path(claims, claim_path)
+    if value is None:
+        return None
+    if isinstance(value, (str, int)):
+        raw = str(value).strip()
+        return raw or None
+    return None
 
 
 def _find_jwk(jwks: dict[str, Any], kid: str) -> dict[str, Any] | None:

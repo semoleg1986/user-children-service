@@ -14,9 +14,10 @@ class Actor:
     :type is_admin: bool
     """
 
-    def __init__(self, user_id: UUID, is_admin: bool):
+    def __init__(self, user_id: UUID, is_admin: bool, org_id: str | None = None):
         self.user_id = user_id
         self.is_admin = is_admin
+        self.org_id = org_id
 
 
 class AccessPolicy:
