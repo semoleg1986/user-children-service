@@ -1,12 +1,16 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  bot:
+  user-children-service:
     build: .
-    container_name: bot_telegram_ykt
-    env_file: .env
+    container_name: user-children-service
+    env_file:
+      - .env
     restart: unless-stopped
-    volumes:
-      - ./data:/app/data
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn src.interface.http.main:app --host 0.0.0.0 --port 8001"
+    ports:
+      - "8001:8001"
     extra_hosts:
       - "host.docker.internal:host-gateway"

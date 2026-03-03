@@ -39,6 +39,19 @@ check: format lint test ## Полная проверка качества код
 run: ## Запустить HTTP сервис (uvicorn)
 	uvicorn src.interface.http.main:app --host 0.0.0.0 --port 8001 --env-file .env
 
+db-upgrade: ## Применить миграции Alembic до head
+	alembic upgrade head
+
+db-downgrade: ## Откатить миграции Alembic на 1 шаг
+	alembic downgrade -1
+
+db-revision: ## Создать новую ревизию Alembic (пример: make db-revision MSG="add table")
+	@if [ -z "$(MSG)" ]; then \
+		echo "Usage: make db-revision MSG='your message'"; \
+		exit 1; \
+	fi
+	alembic revision -m "$(MSG)"
+
 # ========================
 # API Contract
 # ========================
@@ -50,6 +63,7 @@ openapi-check: ## Проверить, что openapi.yaml синхронизир
 	python scripts/export_openapi.py --output openapi.yaml --check
 
 contract-provider: openapi-check test ## Проверка provider-контракта (OpenAPI + tests)
+
 
 # ========================
 # Pre-commit

@@ -6,6 +6,11 @@ uvicorn[standard]
 dishka
 pyjwt[crypto]
 httpx
+sqlalchemy
+asyncpg
+alembic
+greenlet
+python-dotenv
 
 black
 isort

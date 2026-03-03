@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import os
+from typing import AsyncIterator
+
 from dishka import Provider, Scope, provide
 from fastapi import HTTPException
 from starlette import status
@@ -48,10 +51,35 @@ class AppProvider(Provider):
         return InMemoryAuditRepository()
 
     @provide(scope=Scope.REQUEST)
-    def provide_uow(
+    async def provide_uow(
         self, repo: AsyncUserRepository, audit_repo: AsyncAuditRepository
-    ) -> UnitOfWork:
-        return InMemoryUnitOfWork(user_repo=repo, audit_repo=audit_repo)
+    ) -> AsyncIterator[UnitOfWork]:
+        if os.getenv("DATABASE_URL"):
+            from src.infrastructure.persistence.sqlalchemy import get_session_factory
+            from src.infrastructure.persistence.uow.sqlalchemy_uow import (
+                SqlAlchemyUnitOfWork,
+            )
+
+            session_factory = get_session_factory()
+            if session_factory is None:
+                raise RuntimeError(
+                    (
+                        "DATABASE_URL is set but SQLAlchemy session factory "
+                        "is not available"
+                    )
+                )
+            session = session_factory()
+            uow = SqlAlchemyUnitOfWork(session)
+            try:
+                yield uow
+            except Exception:
+                await uow.rollback()
+                raise
+            finally:
+                await uow.close()
+            return
+
+        yield InMemoryUnitOfWork(user_repo=repo, audit_repo=audit_repo)
 
     @provide(scope=Scope.REQUEST)
     async def provide_actor(self, request: Request, auth_service: AuthService) -> Actor:

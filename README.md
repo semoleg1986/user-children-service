@@ -25,6 +25,24 @@ make install
 make run
 ```
 
+## Postgres и Alembic
+По умолчанию сервис использует in-memory persistence.
+Для работы с PostgreSQL укажи `DATABASE_URL` в `.env`.
+
+Пример:
+```env
+DATABASE_URL=postgresql+asyncpg://monitoring:asawakan@127.0.0.1:55432/monitoring
+```
+
+Миграции:
+```bash
+make db-upgrade
+make db-downgrade
+make db-revision MSG="add something"
+```
+
+Важно: при включенном `DATABASE_URL` перед `make run` сначала выполни `make db-upgrade`.
+
 ## JWT ожидания
 - `sub` -> `user_id`
 - `roles` -> роли (в т.ч. `admin`)

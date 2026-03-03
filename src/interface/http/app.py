@@ -21,6 +21,7 @@ from src.interface.http.errors import (
 from src.interface.http.health import router as health_router
 from src.interface.http.v1.admin.router import router as admin_router
 from src.interface.http.v1.user.router import router as user_router
+from src.interface.http.wiring import init_persistence
 
 logger = logging.getLogger("user_children_service.http")
 
@@ -35,6 +36,7 @@ def create_app() -> FastAPI:
 
     # Fail fast on misconfiguration at startup
     load_auth_settings()
+    init_persistence()
 
     app = FastAPI(title="Child Management Service", lifespan=lifespan)
 
