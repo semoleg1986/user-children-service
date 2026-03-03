@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import asdict
-from uuid import uuid4
+from datetime import date, datetime
+from uuid import UUID, uuid4
 
 from src.application.unit_of_work import AuditEventRecord, UnitOfWork
 from src.domain.aggregates.user import User
@@ -26,6 +27,21 @@ def _action_for_event_name(name: str) -> str:
     return f"{name.lower()}.changed"
 
 
+def _to_jsonable(value):
+    """Преобразовать вложенные структуры в JSON-совместимый формат."""
+    if isinstance(value, UUID):
+        return str(value)
+    if isinstance(value, datetime | date):
+        return value.isoformat()
+    if isinstance(value, dict):
+        return {str(k): _to_jsonable(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_to_jsonable(v) for v in value]
+    if isinstance(value, tuple):
+        return [_to_jsonable(v) for v in value]
+    return value
+
+
 async def emit_user_events(
     *,
     uow: UnitOfWork,
@@ -36,7 +52,7 @@ async def emit_user_events(
     service: str = "user-children-service",
 ) -> None:
     for event in user.pull_events():
-        payload_after = asdict(event)
+        payload_after = _to_jsonable(asdict(event))
         target_id = getattr(event, "child_id", None) or getattr(event, "user_id", None)
         target_type = "child" if getattr(event, "child_id", None) else "user"
         record = AuditEventRecord(
