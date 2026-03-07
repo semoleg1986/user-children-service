@@ -17,20 +17,21 @@
 - **Invariant 4**: User Aggregate Root гарантирует целостность данных всех своих Child.
 - **Invariant 5**: Child в пользовательских сценариях не удаляется физически, а переводится в состояние `archived` (soft-delete).
 - **Invariant 6**: Архивированный Child не возвращается в стандартных списках детей.
+- **Invariant 7**: Любая мутация `User/Child` увеличивает `version` и обновляет `updated_at`.
 
 ### 2. Child → Story
 
-- **Invariant 7**: Story принадлежит только одному Child.
-- **Invariant 8**: Story immutable после создания (Value Object). Можно только добавлять новые.
-- **Invariant 9**: Child не может содержать Story с дублирующимся `story_id`.
+- **Invariant 8**: Story принадлежит только одному Child.
+- **Invariant 9**: Story immutable после создания (Value Object). Можно только добавлять новые.
+- **Invariant 10**: Child не может содержать Story с дублирующимся `story_id`.
 
 ### 3. Admin / User Rules
 
-- **Invariant 10**: Admin не владеет Child напрямую, действует через User.
-- **Invariant 11**: User не может управлять чужими Child.
-- **Invariant 12**: Любая попытка изменения Child / Story проверяется через Policies.
-- **Invariant 13**: Политики должны применяться до изменения агрегата, предотвращая нарушение инвариантов.
-- **Invariant 14**: `org_id` в контексте актёра является опциональным и сейчас не участвует в правилах доступа.
+- **Invariant 11**: Admin не владеет Child напрямую, действует через User.
+- **Invariant 12**: User не может управлять чужими Child.
+- **Invariant 13**: Любая попытка изменения Child / Story проверяется через Policies.
+- **Invariant 14**: Политики должны применяться до изменения агрегата, предотвращая нарушение инвариантов.
+- **Invariant 15**: `org_id` в контексте актёра является опциональным и сейчас не участвует в правилах доступа.
 
 ---
 

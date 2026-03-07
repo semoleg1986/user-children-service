@@ -148,3 +148,65 @@ User (Aggregate Root)
 3. Policies обеспечивают безопасность и целостность, не смешивая роли с сущностями.
 4. Repository интерфейсы позволяют Infrastructure слой реализовать персистентность.
 5. Любые новые сущности или value objects должны быть согласованы с этим документом и добавлены в UML.
+
+---
+
+## Поля Доменной Модели (Contract v0.1.2)
+
+### User
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `user_id` | `UUID` | yes | Идентификатор пользователя (родителя) |
+| `name` | `str` | yes | Имя пользователя |
+| `status` | `active \| blocked` | yes | Статус пользователя |
+| `created_at` | `datetime` | yes | Время создания |
+| `updated_at` | `datetime` | yes | Время последнего изменения |
+| `version` | `int` | yes | Версия агрегата для конкурентных изменений |
+
+### Child
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `child_id` | `UUID` | yes | Идентификатор ребенка |
+| `user_id` | `UUID` | yes | Идентификатор владельца (`User`) |
+| `name` | `str` | yes | Имя ребенка |
+| `birthdate` | `date` | yes | Дата рождения |
+| `status` | `active \| archived` | yes | Статус ребенка |
+| `created_at` | `datetime` | yes | Время создания |
+| `updated_at` | `datetime` | yes | Время последнего изменения |
+| `archived_at` | `datetime \| null` | no | Время архивирования |
+| `version` | `int` | yes | Версия сущности |
+
+### Story
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `story_id` | `UUID` | yes | Идентификатор истории |
+| `user_id` | `UUID` | yes | Владелец истории |
+| `child_id` | `UUID` | yes | Ребенок, к которому относится история |
+| `title` | `str` | yes | Заголовок истории |
+| `content` | `str` | yes | Текст истории |
+| `created_at` | `datetime` | yes | Время создания |
+| `updated_at` | `datetime` | yes | Время последнего изменения |
+| `version` | `int` | yes | Версия записи |
+
+### AuditEvent
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `event_id` | `UUID` | yes | Идентификатор события |
+| `service` | `str` | yes | Сервис-источник |
+| `action` | `str` | yes | Действие (`user.created`, `child.archived` и т.п.) |
+| `occurred_at` | `datetime` | yes | Время события |
+| `actor_id` | `UUID \| null` | no | Кто инициировал изменение |
+| `actor_role` | `str \| null` | no | Роль инициатора |
+| `target_type` | `str` | yes | Тип целевого объекта (`user`, `child`, `story`) |
+| `target_id` | `UUID` | yes | Идентификатор целевого объекта |
+| `request_id` | `str \| null` | no | Request ID |
+| `correlation_id` | `str \| null` | no | Correlation ID |
+| `payload_before` | `json \| null` | no | Снимок состояния до изменения |
+| `payload_after` | `json \| null` | no | Снимок состояния после изменения |
+| `user_id` | `UUID \| null` | no | Владелец бизнес-объекта |
+| `version_after` | `int \| null` | no | Версия после изменения |
+| `status_after` | `str \| null` | no | Статус после изменения |
